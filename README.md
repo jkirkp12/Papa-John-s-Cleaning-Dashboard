@@ -1,0 +1,1 @@
+A simple web app for managing daily cleaning tasks and employee role assignments at Papa John's Store 5315. Features include role assignment by managers, task tracking for workers, and a clean Papa John’s branded UI. Built with HTML, CSS, and JavaScript using local storage for data persistence.
