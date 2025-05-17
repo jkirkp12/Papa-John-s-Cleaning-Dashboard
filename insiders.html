@@ -1,0 +1,340 @@
+<!DOCTYPE html> 
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Papa John's Worker Daily Tasks</title>
+  <style>
+    :root {
+      --pj-red: #ff0000;
+      --pj-white: #ffffff;
+      --pj-green: #1f5433;
+    }
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: var(--pj-white);
+      color: var(--pj-green);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    header {
+      background-color: var(--pj-green);
+      display: flex;
+      align-items: center;
+      padding: 10px 25px;
+      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+    }
+    .logo-link {
+      display: inline-block;
+      margin-right: 30px;
+    }
+    .logo {
+      height: 50px;
+      display: block;
+    }
+    nav {
+      display: flex;
+      gap: 25px;
+    }
+    nav a {
+      color: var(--pj-white);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1rem;
+      transition: color 0.3s ease;
+    }
+    nav a:hover,
+    nav a:focus {
+      color: var(--pj-red);
+      outline: none;
+    }
+    main {
+      flex-grow: 1;
+      max-width: 900px;
+      margin: 40px auto;
+      padding: 0 20px;
+      width: 100%;
+    }
+    h1.page-title {
+      text-align: center;
+      margin-bottom: 30px;
+      color: var(--pj-red);
+      font-weight: 700;
+    }
+    label {
+      display: block;
+      margin-top: 15px;
+      font-weight: 600;
+    }
+    select, input[type="text"] {
+      margin-top: 6px;
+      padding: 10px;
+      width: 100%;
+      max-width: 400px;
+      border-radius: 6px;
+      border: 2px solid var(--pj-green);
+      font-size: 1rem;
+      box-sizing: border-box;
+      color: var(--pj-green);
+    }
+    #taskContainer {
+      margin-top: 30px;
+    }
+    .task {
+      background-color: var(--pj-green);
+      color: var(--pj-white);
+      margin-bottom: 12px;
+      padding: 15px 20px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 5px 10px rgba(0,0,0,0.15);
+      transition: background-color 0.3s ease;
+    }
+    .task.completed {
+      background-color: #2f7a49;
+      text-decoration: line-through;
+    }
+    .task label {
+      flex-grow: 1;
+      cursor: pointer;
+      user-select: none;
+      padding-left: 10px;
+      font-size: 1.1rem;
+    }
+    .timestamp {
+      font-size: 0.85rem;
+      font-style: italic;
+      white-space: nowrap;
+      margin-left: 15px;
+      min-width: 160px;
+      text-align: right;
+      user-select: none;
+    }
+    input[type="checkbox"] {
+      width: 22px;
+      height: 22px;
+      cursor: pointer;
+    }
+    #resetButton {
+      margin-top: 20px;
+      padding: 10px 15px;
+      font-weight: 600;
+      cursor: pointer;
+      background-color: var(--pj-red);
+      color: var(--pj-white);
+      border: none;
+      border-radius: 6px;
+      transition: background-color 0.3s ease;
+    }
+    #resetButton:hover,
+    #resetButton:focus {
+      background-color: #cc0000;
+      outline: none;
+    }
+    @media (max-width: 600px) {
+      header {
+        flex-direction: column;
+        text-align: center;
+      }
+      nav {
+        margin: 15px 0 0 0;
+      }
+      nav a {
+        margin: 0 12px;
+      }
+      .timestamp {
+        min-width: auto;
+        margin-left: 8px;
+        font-size: 0.75rem;
+      }
+    }
+  </style>
+</head>
+<body>
+<header>
+  <a href="index.html" class="logo-link">
+    <img src="../Assets/images/papajohnslogo.png" alt="Papa John's Logo" class="logo" />
+  </a>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="insiders.html">Insiders</a>
+    <a href="managers.html">Managers</a>
+  </nav>
+</header>
+<main>
+  <h1 class="page-title">Daily Checklist</h1>
+  <label for="nameSelect">Select Your Name:</label>
+  <select id="nameSelect">
+    <option value="">-- Choose Name --</option>
+    <option value="Jacob Kirkpatrick">Jacob Kirkpatrick</option>
+    <option value="Joshua Ford">Joshua Ford</option>
+    <option value="Ethan Hardy">Ethan Hardy</option>
+    <option value="Stephanie Grant">Stephanie Grant</option>
+    <option value="Morgan Whited">Morgan Whited</option>
+    <option value="Isabella Mejia">Isabella Mejia</option>
+    <option value="Olivia Western">Olivia Western</option>
+  </select>
+  <label for="deploymentSelect">Select Your Deployment:</label>
+  <select id="deploymentSelect">
+    <option value="">-- Choose Deployment --</option>
+    <option value="Makeline">Makeline</option>
+    <option value="Cut Table and Counters">Cut Table and Counters</option>
+    <option value="Janitor">Janitor</option>
+    <option value="Dough Station and Sweep">Dough Station and Sweep</option>
+    <option value="BOH and Baseboards">BOH and Baseboards</option>
+  </select>
+  <label for="initialsInput">Enter Your Initials:</label>
+  <input type="text" id="initialsInput" placeholder="Your initials" maxlength="4" />
+  <div id="taskContainer"></div>
+  <button id="resetButton">Reset Tasks</button>
+  <footer>
+    Made by Jacob Kirkpatrick
+  </footer>
+</main>
+<script>
+  const taskContainer = document.getElementById("taskContainer");
+  const nameSelect = document.getElementById("nameSelect");
+  const deploymentSelect = document.getElementById("deploymentSelect");
+  const initialsInput = document.getElementById("initialsInput");
+  const resetButton = document.getElementById("resetButton");
+  const progressData = JSON.parse(localStorage.getItem("taskProgress") || "{}");
+
+  const tasksByDeployment = {
+    "Makeline": [
+      "Take Makeline trays to the sink",
+      "Restock the inside of the Makeline",
+      "Clean trays inside of the Makeline",
+      "Clean the inside of the Makeline",
+      "Wipe off the Makeline counter",
+      "Restock all toppings/items under makeline",
+      "Restock the cheese under makeline"
+    ],
+    "Cut Table and Counters": [
+      "Take Cutters to the sink",
+      "Wipe the entire oven",
+      "Sort and move screens",
+      "Wipe off Cut Table counter",
+      "Restock Cut Table fridge",
+      "Wipe the Cut Table Fridge",
+      "Take Papadia covers to the sink",
+      "Dust off Dough Station",
+      "Wipe off all Counters"
+    ],
+    "Janitor": [
+      "Restock Pepsi fridge",
+      "Wipe off Drivers Table Counter",
+      "Dust off Office Chairs",
+      "Wipe the Office desk",
+      "Restock paper towels and toilet paper",
+      "Wipe off all sinks",
+      "Clean all sink drains",
+      "Sweep Back of House",
+      "Wipe off Bathroom Door",
+      "Wipe Sink, Toilet, and Soaps",
+      "Mop Bathroom floor",
+      "Replace Bathroom trash bag"
+    ],
+    "Dough Station and Sweep": [
+      "Dust off Dough Station",
+      "Clear empty Dough Trays",
+      "Wipe off Dough Station Counters",
+      "Wipe off Dough Station",
+      "Clean racks on wall",
+      "Stock Flour bin and put on top of Dough Station",
+      "Sweep Kitchen floors"
+    ],
+    "BOH and Baseboards": [
+      "Clean sinks",
+      "Clean floor drains",
+      "Sweep BOH floors",
+      "Clean Prep Table",
+      "Wipe any sauce off of walls",
+      "Stock paper towels",
+      "Wipe down sink pipes"
+    ]
+  };
+
+  nameSelect.addEventListener("change", loadTasks);
+  deploymentSelect.addEventListener("change", loadTasks);
+
+  resetButton.addEventListener("click", () => {
+    if (confirm("Are you sure you want to reset all tasks? This cannot be undone.")) {
+      localStorage.removeItem("taskProgress");
+      for (const key in progressData) {
+        delete progressData[key];
+      }
+      loadTasks();
+    }
+  });
+
+  function loadTasks() {
+    const name = nameSelect.value;
+    const deployment = deploymentSelect.value;
+    if (!name || !deployment) {
+      taskContainer.innerHTML = "";
+      return;
+    }
+    const tasks = tasksByDeployment[deployment] || [];
+    const userKey = `${name}::${deployment}`;
+    const progress = progressData[userKey] || {};
+    taskContainer.innerHTML = "";
+    tasks.forEach(task => {
+      const taskDiv = document.createElement("div");
+      taskDiv.className = "task";
+      const checkbox = document.createElement("input");
+      checkbox.type = "checkbox";
+      checkbox.checked = !!progress[task];
+      checkbox.onchange = (e) => handleCheck(e, name, deployment, task, taskDiv, timeSpan);
+      const label = document.createElement("label");
+      label.textContent = task;
+      label.htmlFor = task;
+      const timeSpan = document.createElement("div");
+      timeSpan.className = "timestamp";
+      if (progress[task]) {
+        timeSpan.textContent = `Completed at: ${progress[task].time} by ${progress[task].initials}`;
+        taskDiv.classList.add("completed");
+      }
+      taskDiv.appendChild(checkbox);
+      taskDiv.appendChild(label);
+      taskDiv.appendChild(timeSpan);
+      taskContainer.appendChild(taskDiv);
+    });
+  }
+
+  function handleCheck(event, name, deployment, task, taskDiv, timeSpan) {
+    const initials = initialsInput.value.trim();
+    if (!initials) {
+      alert("Please enter your initials before marking tasks complete.");
+      event.target.checked = false;
+      return;
+    }
+    const now = new Date().toLocaleString();
+    const userKey = `${name}::${deployment}`;
+    if (!progressData[userKey]) progressData[userKey] = {};
+    if (event.target.checked) {
+      progressData[userKey][task] = {
+        time: now,
+        initials: initials
+      };
+      taskDiv.classList.add("completed");
+      taskDiv.querySelector(".timestamp").textContent = `Completed at: ${now} by ${initials}`;
+    } else {
+      delete progressData[userKey][task];
+      taskDiv.classList.remove("completed");
+      taskDiv.querySelector(".timestamp").textContent = "";
+    }
+    localStorage.setItem("taskProgress", JSON.stringify(progressData));
+  }
+
+  window.onload = () => {
+    if (nameSelect.value && deploymentSelect.value) {
+      loadTasks();
+    }
+  };
+</script>
+</body>
+</html>
